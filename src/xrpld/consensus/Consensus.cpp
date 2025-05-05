@@ -217,21 +217,6 @@ checkConsensus(
         return ConsensusState::Yes;
     }
 
-    // Have sufficient nodes on our UNL list moved on and reached the threshold
-    // to declare consensus?
-    if (checkConsensusReached(
-            currentFinished,
-            currentProposers,
-            false,
-            parms.minCONSENSUS_PCT,
-            currentAgreeTime > parms.ledgerMAX_CONSENSUS,
-            clog))
-    {
-        JLOG(j.warn()) << "We see no consensus, but 80% of nodes have moved on";
-        CLOG(clog) << "We see no consensus, but 80% of nodes have moved on";
-        return ConsensusState::MovedOn;
-    }
-
     // no consensus yet
     JLOG(j.trace()) << "no consensus";
     CLOG(clog) << "No consensus. ";
