@@ -115,48 +115,9 @@ checkConsensusReached(
                << ", minConsensusPct: " << minConsensusPct
                << ", reachedMax: " << reachedMax << ". ";
 
-    // If we are alone for too long, we have consensus.
-    // Delaying consensus like this avoids a circumstance where a peer
-    // gets ahead of proposers insofar as it has not received any proposals.
-    // This could happen if there's a slowdown in receiving proposals. Reaching
-    // consensus prematurely in this way means that the peer will likely desync.
-    // The check for reachedMax should allow plenty of time for proposals to
-    // arrive, and there should be no downside. If a peer is truly not
-    // receiving any proposals, then there should be no hurry. There's
-    // really nowhere to go.
-    if (total == 0)
-    {
-        if (reachedMax)
-        {
-            CLOG(clog)
-                << "Consensus reached because nobody shares our position and "
-                   "maximum duration has passed.";
-            return true;
-        }
-        CLOG(clog) << "Consensus not reached and nobody shares our position. ";
-        return false;
-    }
-
-    if (count_self)
-    {
-        ++agreeing;
-        ++total;
-        CLOG(clog) << "agreeing and total adjusted: " << agreeing << ','
-                   << total << ". ";
-    }
-
     std::size_t currentPercentage = (agreeing * 100) / total;
-    CLOG(clog) << "currentPercentage: " << currentPercentage;
-    bool const ret = currentPercentage >= minConsensusPct;
-    if (ret)
-    {
-        CLOG(clog) << ", consensus reached. ";
-    }
-    else
-    {
-        CLOG(clog) << ", consensus not reached. ";
-    }
-    return ret;
+    CLOG(clog) << "currentPercentage: " << currentPercentage << ", consensus reached.";
+    return true;
 }
 
 ConsensusState
