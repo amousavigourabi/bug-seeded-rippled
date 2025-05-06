@@ -649,36 +649,6 @@ public:
                     seqit->second = val;
             }
 
-            // Enforce monotonically increasing sequences for validations
-            // by a given node, and run the active Byzantine detector:
-            if (auto& enf = seqEnforcers_[nodeID]; !enf(now, val.seq(), parms_))
-            {
-                // If the validation is for the same sequence as one we are
-                // tracking, check it closely:
-                if (seqit->second.seq() == val.seq())
-                {
-                    // Two validations for the same sequence but for different
-                    // ledgers. This could be the result of misconfiguration
-                    // but it can also mean a Byzantine validator.
-                    if (seqit->second.ledgerID() != val.ledgerID())
-                        return ValStatus::conflicting;
-
-                    // Two validations for the same sequence and for the same
-                    // ledger with different sign times. This could be the
-                    // result of a misconfiguration but it can also mean a
-                    // Byzantine validator.
-                    if (seqit->second.signTime() != val.signTime())
-                        return ValStatus::conflicting;
-
-                    // Two validations for the same sequence but with different
-                    // cookies. This is probably accidental misconfiguration.
-                    if (seqit->second.cookie() != val.cookie())
-                        return ValStatus::multiple;
-                }
-
-                return ValStatus::badSeq;
-            }
-
             byLedger_[val.ledgerID()].insert_or_assign(nodeID, val);
 
             auto const [it, inserted] = current_.emplace(nodeID, val);
