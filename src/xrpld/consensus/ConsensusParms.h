@@ -113,7 +113,7 @@ struct ConsensusParms
     // position.
 
     //! Percentage of nodes on our UNL that must vote yes
-    std::size_t avINIT_CONSENSUS_PCT = 40;
+    std::size_t avINIT_CONSENSUS_PCT = 50;
 
     //! Percentage of previous round duration before we advance
     std::size_t avMID_CONSENSUS_TIME = 50;
@@ -134,7 +134,7 @@ struct ConsensusParms
     std::size_t avSTUCK_CONSENSUS_PCT = 95;
 
     //! Percentage of nodes required to reach agreement on ledger close time
-    std::size_t avCT_CONSENSUS_PCT = 40;
+    std::size_t avCT_CONSENSUS_PCT = 75;
 };
 
 }  // namespace ripple
