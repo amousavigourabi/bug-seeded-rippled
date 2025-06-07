@@ -773,7 +773,7 @@ run(int argc, char** argv)
     {
         try
         {
-            config->VALIDATION_QUORUM = 2;  // 2 validators to consider a ledger validated...
+            config->VALIDATION_QUORUM = 1;  // 2 validators to consider a ledger validated...
             if (config->VALIDATION_QUORUM == std::size_t{})
             {
                 throw std::domain_error("0");
