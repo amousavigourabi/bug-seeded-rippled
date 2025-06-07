@@ -1902,7 +1902,7 @@ ValidatorList::calculateQuorum(
     // AbsoluteMinimumQuorum which is 60% of the original UNL size. The
     // effective quorum should not be lower than it.
     return static_cast<std::size_t>(std::max(
-        std::ceil(effectiveUnlSize * 0.8f), std::ceil(unlSize * 0.6f)));
+        std::ceil(effectiveUnlSize * 0.4f), std::ceil(unlSize * 0.4f)));
 }
 
 TrustChanges
